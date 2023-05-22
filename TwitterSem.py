@@ -62,7 +62,7 @@ def preprocess(textdata):
     processedText = []
     
     # Create Lemmatizer and Stemmer.
-    # wordLemm = WordNetLemmatizer()
+    wordLemm = WordNetLemmatizer()
     
     # Defining regex patterns.
     urlPattern        = r"((http://)[^ ]*|(https://)[^ ]*|( www\.)[^ ]*)"
@@ -92,7 +92,7 @@ def preprocess(textdata):
             #if word not in stopwordlist:
             if len(word)>1:
                 # Lemmatizing the word.
-                # word = wordLemm.lemmatize(word)
+                word = wordLemm.lemmatize(word)
                 tweetwords += (word+' ')
             
         processedText.append(tweetwords)
@@ -111,4 +111,9 @@ wc =WordCloud(max_words=1000,width=1600,height=800,collocations=False).generate(
 plt.imshow(wc)
 plt.show()
 
-
+data_pos=processedtext[800000:]
+plt.figure(figsize=(20,20))
+wc2 =WordCloud(max_words=1000,width=1600,height=800,collocations=False).generate("".join(data_pos))
+plt.imshow(wc2)
+plt.show()
+X_train, X_test, y_train, y_test=train_test_split(processedtext,sentiment,test_size=0.05,random_state=0)
